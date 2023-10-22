@@ -117,7 +117,16 @@ public class App
         	}   	
         		
     	}
-    	
+    	try {
+    		OCR(imagePath,outputPath);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		deleteExpiredToken();
+    		OCR(imagePath,outputPath);
+    	}
+    }
+    
+    private static void OCR(String imagePath,String outputPath) throws GeneralSecurityException, IOException{
     	final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
@@ -127,5 +136,12 @@ public class App
     	text=text.replace("________________\n", "");
     	writeFileWithBufferedWriter(text,outputPath);
     	System.out.println(text);
+    }
+    
+    private static void deleteExpiredToken(){
+    	java.io.File file = new java.io.File(TOKENS_DIRECTORY_PATH,"StoredCredential");
+    	if (file.exists()) {
+    		file.delete();
+    	}
     }
 }
