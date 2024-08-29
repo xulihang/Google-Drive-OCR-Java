@@ -133,7 +133,7 @@ public class App
                 .build();
         String fileID = uploadImageAsDocument(imagePath);
     	String text = downloadExtractedText(fileID);
-    	text=text.replace("________________\n", "");
+    	text=text.replace("________________\n\n", "");
     	writeFileWithBufferedWriter(text,outputPath);
     	System.out.println(text);
     }
