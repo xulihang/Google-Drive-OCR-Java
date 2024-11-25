@@ -125,6 +125,8 @@ public class App
     		if (e instanceof TokenResponseException) {
     			deleteExpiredToken();
         		OCR(imagePath,outputPath);
+    		}else {
+    			writeFileWithBufferedWriter("",outputPath);
     		}
     	}
     }
